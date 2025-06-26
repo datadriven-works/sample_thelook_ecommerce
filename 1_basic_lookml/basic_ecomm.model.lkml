@@ -9,8 +9,6 @@
 # connection: "bigquery_connection"
 connection: "bigquery_data_driven"
 
-
-
 label: "Z) Sample LookML" # Set UI label to "Z)..." so this demo project's Explores appear last in the Explore list
 
 include: "/1_basic_lookml/*.view.lkml" # The * wildcard was used here to include all view files in this folder
