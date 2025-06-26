@@ -6,7 +6,7 @@
 # `advanced_example_ecommerce.explore.lkml"`. That file is included below.
 
 # connection: "bigquery_connection"
-connection: "kevmccarthy_bq"
+connection: "bigquery_data_driven"
 
 label: "Z) Sample LookML"
 
