@@ -28,7 +28,7 @@ explore: intermediate_example_ecommerce {
     fields: [inventory_items.product_id, inventory_items.cost,inventory_items.total_cost,inventory_items.average_cost] # We determined most inventory_item fields aren't relevant to our users, so we used the `fields` parameter to show in this Explore only the fields from this join that are necessary and helpful.
     type: left_outer
     relationship: one_to_one
-    sql_on: ${inventory_items.id} = ${order_items.inventory_item_id} ;;
+    sql_on: ${order_items.inventory_item_id} = ${inventory_items.id}  ;;
   }
 
   join: products {
