@@ -15,6 +15,8 @@ include: "/3_advanced_lookml/advanced_example_ecommerce.explore.lkml"
 
 include: "/3_advanced_lookml/data_test_file.lkml"
 
+include: "sales_state_gender.view"
+
 ### Advanced Concept: Aggregate Tables
 # NOTE: The `include` and `explore` statements below are commented out because aggregate tables
 # aren't supported unless persistent derived tables (PDTs) are enabled on the database connection.

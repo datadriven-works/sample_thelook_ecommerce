@@ -21,6 +21,17 @@ view: intermediate_products {
     drill_fields: [name]
   }
 
+  dimension: brand_link {
+    type: string
+    sql: ${TABLE}.brand ;;
+    link: {
+      label: "Search the web"
+      url: "http://www.google.com/search?q={{ value | url_encode}
+  }}"
+      icon_url: "http://www.google.com/s2/favicons?domain=www.{{ value | url_encode }}.com"
+    }
+  }
+
   dimension: category {
     type: string
     sql: ${TABLE}.category ;;
@@ -70,6 +81,13 @@ view: intermediate_products {
     label: "Count Distinct Products"
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: average_retail_price{
+    label: "Avg Retail Price"
+    type: average
+    sql: ${TABLE}.retail_price ;;
+    value_format_name: usd_0
   }
 
   set: detail {fields: [id,department,brand,category,name]} # The set of basic fields from this view that are used in the measure's `drill_fields` parameter.

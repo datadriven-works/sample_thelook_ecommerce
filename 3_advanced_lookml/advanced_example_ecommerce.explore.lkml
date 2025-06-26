@@ -12,6 +12,7 @@ include: "/3_advanced_lookml/priority_item_filter_feature_support.view.lkml"
 include: "/3_advanced_lookml/user_summary_and_order_items_fields.view.lkml"
 include: "/3_advanced_lookml/user_summary_unfiltered.view.lkml"
 include: "/3_advanced_lookml/user_summary_filtered.view.lkml"
+include: "sales_state_gender.view"
 
 explore: advanced_example_ecommerce {
   extends: [intermediate_example_ecommerce] # We'll use an `extends` parameter to reuse the Explore logic that
@@ -69,6 +70,11 @@ explore: advanced_example_ecommerce {
   # This derived table summarizes the filtered data by using `bind_all_filters` to
   # bind filters to the derived table.
 
+  join: sales_state_gender {
+    type: left_outer
+    relationship: many_to_one
+    sql_on: ${sales_state_gender.state}=${users.state} ;;
+}
 
   join: user_summary_and_order_items_fields {relationship: one_to_one sql: ;;}
   join: priority_item_filter_feature_support {relationship: one_to_one sql: ;;}
