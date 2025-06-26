@@ -56,6 +56,13 @@ view: intermediate_inventory_items {
     hidden: yes
   }
 
+  dimension: brand {
+    type: string
+    sql: ${products.brand} ;;
+
+  }
+
+
   ## MEASURES ##
   measure: count {
     label: "Inventory Item Count"

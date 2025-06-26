@@ -6,7 +6,7 @@
 # `advanced_example_ecommerce.explore.lkml"`. That file is included below.
 
 # connection: "bigquery_connection"
-connection: "kevmccarthy_bq"
+connection: "bigquery_data_driven"
 
 label: "Z) Sample LookML"
 
@@ -14,6 +14,8 @@ include: "/3_advanced_lookml/advanced_example_ecommerce.explore.lkml"
 # explore: advanced_example_ecommerce {} # Note: advanced_example_ecommerce is included above, so it exists in this model.
 
 include: "/3_advanced_lookml/data_test_file.lkml"
+
+include: "sales_state_gender.view"
 
 ### Advanced Concept: Aggregate Tables
 # NOTE: The `include` and `explore` statements below are commented out because aggregate tables
