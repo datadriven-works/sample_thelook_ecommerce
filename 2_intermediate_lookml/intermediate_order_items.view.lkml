@@ -191,6 +191,203 @@ view: intermediate_order_items {
   }
 
 
+  parameter: measure_picker {
+    view_label: "Dynamic Fields"
+    label: "Measure Picker"
+    type: unquoted
+    allowed_value: {
+      label: "Revenue"
+      value: "Revenue"
+    }
+    allowed_value: {
+      label: "Orders Processed"
+      value: "Orders"
+    }
+    allowed_value: {
+      label: "Active Customers"
+      value: "Customers"
+    }
+    allowed_value: {
+      label: "Average Order Value"
+      value: "AOV"
+    }
+  }
+
+  dimension: monthly_trend_dynamic_label {
+    view_label: "Dynamic Fields"
+    type: string
+    sql:
+    {% if measure_picker._parameter_value == 'Orders' %}
+      'Monthly Orders Trend'
+    {% elsif measure_picker._parameter_value == 'Customers' %}
+      'Monthly Active Customers Trend'
+    {% elsif measure_picker._parameter_value == 'AOV' %}
+      'Monthly Average Order Value Trend'
+    {% else %}
+      'Monthly Revenue Trend'
+    {% endif %} ;;
+    html:
+    <div style=\"
+    background:#1E73E8;
+    color:#FFFFFF;
+    font-size:28px;
+    font-weight:700;
+    line-height:1.2;
+    text-align:center;
+    padding:22px 16px;
+    border-radius:4px;
+    letter-spacing:0.2px;
+    width:100%;
+    box-sizing:border-box;
+    display:block;
+    \">
+    {{ rendered_value }}
+    </div>
+    ;;
+  }
+
+  dimension: top_10_states_dynamic_label {
+    view_label: "Dynamic Fields"
+    type: string
+    sql:
+    {% if measure_picker._parameter_value == 'Orders' %}
+      'Top 10 US States by Orders'
+    {% elsif measure_picker._parameter_value == 'Customers' %}
+      'Top 10 US States by Active Customers'
+    {% elsif measure_picker._parameter_value == 'AOV' %}
+      'Top 10 US States by Average Order Value'
+    {% else %}
+      'Top 10 US States by Revenue'
+    {% endif %} ;;
+    html:
+    <div style=\"
+    background:#1E73E8;
+    color:#FFFFFF;
+    font-size:28px;
+    font-weight:700;
+    line-height:1.2;
+    text-align:center;
+    padding:22px 16px;
+    border-radius:4px;
+    letter-spacing:0.2px;
+    width:100%;
+    box-sizing:border-box;
+    display:block;
+    \">
+    {{ rendered_value }}
+    </div>
+    ;;
+  }
+
+  dimension: global_sales_distribution_dynamic_label {
+    view_label: "Dynamic Fields"
+    type: string
+    sql:
+    {% if measure_picker._parameter_value == 'Orders' %}
+      'Global Sales Distribution by Orders'
+    {% elsif measure_picker._parameter_value == 'Customers' %}
+      'Global Sales Distribution by Active Customers'
+    {% elsif measure_picker._parameter_value == 'AOV' %}
+      'Global Sales Distribution by Average Order Value'
+    {% else %}
+      'Global Sales Distribution by Revenue'
+    {% endif %} ;;
+    html:
+    <div style=\"
+    background:#1E73E8;
+    color:#FFFFFF;
+    font-size:28px;
+    font-weight:700;
+    line-height:1.2;
+    text-align:center;
+    padding:22px 16px;
+    border-radius:4px;
+    letter-spacing:0.2px;
+    width:100%;
+    box-sizing:border-box;
+    display:block;
+    \">
+    {{ rendered_value }}
+    </div>
+    ;;
+  }
+
+  dimension: traffic_source_dynamic_label {
+    view_label: "Dynamic Fields"
+    type: string
+    sql:
+    {% if measure_picker._parameter_value == 'Orders' %}
+      'Traffic Source by Orders'
+    {% elsif measure_picker._parameter_value == 'Customers' %}
+      'Traffic Source by Active Customers'
+    {% elsif measure_picker._parameter_value == 'AOV' %}
+      'Traffic Source by Average Order Value'
+    {% else %}
+      'Traffic Source by Revenue'
+    {% endif %} ;;
+    html:
+    <div style=\"
+    background:#1E73E8;
+    color:#FFFFFF;
+    font-size:28px;
+    font-weight:700;
+    line-height:1.2;
+    text-align:center;
+    padding:22px 16px;
+    border-radius:4px;
+    letter-spacing:0.2px;
+    width:100%;
+    box-sizing:border-box;
+    display:block;
+    \">
+    {{ rendered_value }}
+    </div>
+    ;;
+  }
+
+  measure: dynamic_measure {
+    view_label: "Dynamic Fields"
+    type: number
+    label_from_parameter: measure_picker
+    sql:
+    {% if measure_picker._parameter_value == 'Orders' %}
+      ${order_items.count}
+    {% elsif measure_picker._parameter_value == 'Customers' %}
+      ${users.count}
+    {% elsif measure_picker._parameter_value == 'AOV' %}
+      ${order_items.average_sale_price}
+    {% else %}
+      ${order_items.total_sale_price}
+    {% endif %}
+    ;;
+    html:
+    {% if measure_picker._parameter_value == 'Revenue' or measure_picker._parameter_value == 'AOV' %}
+    {% assign v = value | times: 1 %}
+    {% if v < 0 %}
+    {% assign sign = '-' %}
+    {% assign v = v | times: -1 %}
+    {% else %}
+    {% assign sign = '' %}
+    {% endif %}
+
+    {% if v >= 1000000000 %}
+    {% assign s = v | divided_by: 1000000000 | round: 1 | append: '' | replace: '.0','' %}
+    {{ sign }}${{ s }}B
+    {% elsif v >= 1000000 %}
+    {% assign s = v | divided_by: 1000000 | round: 1 | append: '' | replace: '.0','' %}
+    {{ sign }}${{ s }}M
+    {% elsif v >= 1000 %}
+    {% assign s = v | divided_by: 1000 | round: 1 | append: '' | replace: '.0','' %}
+    {{ sign }}${{ s }}K
+    {% else %}
+    {{ sign }}${{ v | round: 0 }}
+    {% endif %}
+    {% else %}
+    {{ rendered_value }}
+    {% endif %} ;;
+  }
+
+
 ## Example sets. We've observed that some of this view's fields don't make sense when the data has been limited to 'Valid' only.
   set: innapropriate_fields_for_valid_only_explores {fields:[cancellation_type,total_sales_price_validated]}
   set: standard_order_items_measure_drill_fields {fields:[id,user_id,product_id,created_at_date,shipped_at_date, delivered_at_date, returned_at_date,status,sale_price]}
