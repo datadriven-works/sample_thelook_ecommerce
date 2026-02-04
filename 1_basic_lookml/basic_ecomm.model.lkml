@@ -7,7 +7,7 @@
 ###
 
 # connection: "bigquery_connection"
-connection: "bigquery_data_driven"
+connection: "lcv_bigquery"
 
 label: "Z) Sample LookML" # Set UI label to "Z)..." so this demo project's Explores appear last in the Explore list
 
