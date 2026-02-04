@@ -3,7 +3,7 @@
 ###
 
 # connection: "bigquery_connection"
-connection: "bigquery_data_driven"
+connection: "lcv_bigquery"
 
 label: "Z) Sample LookML"
 
